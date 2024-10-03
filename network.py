@@ -65,6 +65,14 @@ def start_server(net, server_cmd):
   print("Starting server")
   h2.popen(server_cmd)
   
+def get_client_ip(net):
+  h1 = net.getNodeByName('h1')
+  return h1.IP()
+
+def get_server_ip(net):
+  h2 = net.getNodeByName('h2')
+  return h2.IP()
+  
 def test_ping(net):
     # Hint: Use host.popen(cmd, shell=True).  If you pass shell=True
     # to popen, you can redirect cmd's output using shell syntax.
