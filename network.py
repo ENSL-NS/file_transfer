@@ -55,15 +55,11 @@ def start_server(net, server_cmd):
 def stop_client(net, cmd):
   h1 = net.getNodeByName('h1')
   h1.cmd('kill %{}'.format(cmd))
+  return h1.output()
   
 def stop_server(net, cmd):
   h2 = net.getNodeByName('h2')
   h2.cmd('kill %{}'.format(cmd))
-  
-def start_server(net, server_cmd):
-  h2 = net.getNodeByName('h2')
-  print("Starting server")
-  h2.popen(server_cmd)
   
 def get_client_ip(net):
   h1 = net.getNodeByName('h1')
