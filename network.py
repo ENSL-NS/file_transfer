@@ -11,7 +11,7 @@ from mininet.node import OVSController
 class SimpleTopo(Topo):
     "Simple topology for content transfer."
 
-    def __init__(self, bw_host=1000, bw_net=1000, delay=10):
+    def __init__(self, bw_host=1000, bw_net=1000, delay="10ms"):
       super(SimpleTopo, self).__init__()
 
       # Creating the two hosts
@@ -29,8 +29,8 @@ class SimpleTopo(Topo):
 
       return
 
-def get_network(bw=1000, delay=10):
-  topo = SimpleTopo(bw_host=bw, bw_net=bw, delay=delay/2)
+def get_network(bw=1000, delay="10ms"):
+  topo = SimpleTopo(bw_host=bw, bw_net=bw, delay=delay)
   net = Mininet(topo=topo, controller=OVSController, link=TCLink)
   return net
   
@@ -89,5 +89,4 @@ def test_iperf(net):
     # Getting host2 IP
     serverIP = h2.IP()
     output = h1.cmd("iperf -c " + serverIP)
-    h2.stop()
     return output 
