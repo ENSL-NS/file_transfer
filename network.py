@@ -6,6 +6,7 @@ from mininet.topo import Topo
 from mininet.node import CPULimitedHost
 from mininet.link import TCLink
 from mininet.net import Mininet
+from mininet.node import OVSController
 
 class SimpleTopo(Topo):
     "Simple topology for content transfer."
@@ -30,7 +31,7 @@ class SimpleTopo(Topo):
 
 def get_network(bw=1000, delay=10):
   topo = SimpleTopo(bw_host=bw, bw_net=bw, delay=delay/2)
-  net = Mininet(topo=topo, host=CPULimitedHost, link=TCLink)
+  net = Mininet(topo=topo, controller=OVSController, link=TCLink)
   return net
   
 def start_network(net):
@@ -73,6 +74,20 @@ def test_ping(net):
     h2 = net.getNodeByName('h2')
     #Getting host2 IP
     serverIP = h2.IP()
-    pingClient = h1.popen("ping " + serverIP + " -i 0.1")
-    output = pingClient.wait()
-    return output
+    output = h1.cmd("ping " + serverIP + " -i 0.1 -c 10")
+    return output 
+  
+def test_iperf(net):
+    # Hint: Use host.popen(cmd, shell=True).  If you pass shell=True
+    # to popen, you can redirect cmd's output using shell syntax.
+    # i.e. ping ... > /path/to/ping.
+    print("Starting to ping...")
+    h1 = net.getNodeByName('h1')
+    h2 = net.getNodeByName('h2')
+    # Start iperf serer
+    h2.popen("iperf -s")
+    # Getting host2 IP
+    serverIP = h2.IP()
+    output = h1.cmd("iperf -c " + serverIP)
+    h2.stop()
+    return output 
