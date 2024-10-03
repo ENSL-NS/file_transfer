@@ -7,6 +7,7 @@ from mininet.node import CPULimitedHost
 from mininet.link import TCLink
 from mininet.net import Mininet
 from mininet.node import OVSController
+from mininet.util import pmonitor
 
 class SimpleTopo(Topo):
     "Simple topology for content transfer."
@@ -45,12 +46,12 @@ def stop_network(net):
 def start_client(net, client_cmd):
   h1 = net.getNodeByName('h1')
   print("Starting client")
-  h1.popen(client_cmd)
+  return h1.popen(client_cmd)
   
 def start_server(net, server_cmd):
   h2 = net.getNodeByName('h2')
   print("Starting server")
-  h2.popen(server_cmd)
+  return h2.popen(server_cmd)
   
 def stop_client(net, cmd):
   h1 = net.getNodeByName('h1')
@@ -60,6 +61,11 @@ def stop_client(net, cmd):
 def stop_server(net, cmd):
   h2 = net.getNodeByName('h2')
   h2.cmd('kill %{}'.format(cmd))
+  
+def print_output(host):
+  for h, line in pmonitor(host):
+    if h:
+      print(h.name, line)
   
 def get_client_ip(net):
   h1 = net.getNodeByName('h1')
