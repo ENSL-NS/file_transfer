@@ -53,14 +53,20 @@ def start_server(net, server_cmd):
   print("Starting server")
   return h2.popen(server_cmd, shell=True)
   
-def stop_client(net, cmd):
+def stop_client_cmd(net, cmd):
   h1 = net.getNodeByName('h1')
   h1.cmd('kill %{}'.format(cmd))
   return h1.output()
   
-def stop_server(net, cmd):
+def stop_server_cmd(net, cmd):
   h2 = net.getNodeByName('h2')
   h2.cmd('kill %{}'.format(cmd))
+  
+def stop_client(c):
+  c.terminate()
+  
+def stop_server(s):
+  s.terminate()
   
 def get_client_ip(net):
   h1 = net.getNodeByName('h1')
