@@ -63,10 +63,10 @@ def stop_server_cmd(net, cmd):
   h2.cmd('kill %{}'.format(cmd))
   
 def stop_client(c):
-  c.terminate()
+  c.kill()
   
 def stop_server(s):
-  s.terminate()
+  s.kill()
   
 def get_client_ip(net):
   h1 = net.getNodeByName('h1')
@@ -89,7 +89,7 @@ def test_ping(net):
     return output 
   
 def test_iperf(net):
-    print("Starting to ping...")
+    print("Starting iperf...")
     h1 = net.getNodeByName('h1')
     h2 = net.getNodeByName('h2')
     # Start iperf serer
