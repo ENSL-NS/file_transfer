@@ -7,9 +7,11 @@ def run_server(path):
   basepath = path
   s = socket.socket()
   s.bind(("", 5001))
+  print("Server started, listening on ip {} and port {}".format(socket.gethostbyname(socket.gethostname()), 5001))
   s.listen(1)
   while True:
     client_socket, address = s.accept() 
+    print("Received connection from {}".format(address))
     received = client_socket.recv(1024).decode()
     if not received:    
       break

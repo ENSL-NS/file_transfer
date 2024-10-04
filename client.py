@@ -8,6 +8,7 @@ def run_client(filename, ip):
   sport = 5001
   s = socket.socket()
   s.connect((sip, sport))
+  print("Connected to server at ip {} and port {}".format(sip, sport))
   s.send(f"{filename}".encode())
   received = s.recv(1024).decode()
   if received == "EXISTS":
