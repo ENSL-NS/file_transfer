@@ -62,14 +62,6 @@ def stop_server(net, cmd):
   h2 = net.getNodeByName('h2')
   h2.cmd('kill %{}'.format(cmd))
   
-def wait_for_client(net):
-  h1 = net.getNodeByName('h1')
-  return h1.wait()
-
-def wait_for_server(net):
-  h2 = net.getNodeByName('h2')
-  return h2.wait()
-  
 def get_client_ip(net):
   h1 = net.getNodeByName('h1')
   return h1.IP()
