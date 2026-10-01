@@ -24,7 +24,23 @@ def send_dummy_data(conn, total_bytes=1000000):
     send_message(conn, Message(DATA, chunk))
     sent += len(chunk)
   send_message(conn, Message(END))
+  
+def send_list(conn):
+  """Send the list of files in FILES_DIR to the client.
 
+  TODO (Part 1): send a LIST_REPLY message with the names (and sizes) of the
+  files in FILES_DIR. See os.listdir and os.path.getsize.
+  """
+  raise NotImplementedError("send_list is not implemented yet")
+
+def send_file(conn, name):
+  """Send the file `name` from FILES_DIR to the client, or an error if it does not exist.
+
+  Returns the number of bytes sent. If the file does not exist, send an ERROR
+  message and return None.
+  """
+  # TODO (Part 1)
+  raise NotImplementedError("send_file is not implemented yet")
 
 def handle_client(conn):
   # TODO (Part 1): the server must not push data as soon as the client connects.
